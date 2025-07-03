@@ -332,8 +332,20 @@ drizzle/
 `);
     // Install dependencies if not skipped
     if (!config.skipInstall) {
-        const installCommand = getInstallCommand(config.packageManager);
-        (0, child_process_1.execSync)(installCommand, { cwd: projectPath, stdio: 'inherit' });
+        try {
+            const installCommand = getInstallCommand(config.packageManager);
+            (0, child_process_1.execSync)(installCommand, { cwd: projectPath, stdio: 'inherit' });
+        }
+        catch (error) {
+            // Try with legacy peer deps for npm if there are dependency conflicts
+            if (config.packageManager === 'npm') {
+                console.log('\nRetrying with --legacy-peer-deps due to dependency conflicts...');
+                (0, child_process_1.execSync)('npm install --legacy-peer-deps', { cwd: projectPath, stdio: 'inherit' });
+            }
+            else {
+                throw error;
+            }
+        }
     }
 }
 function getInstallCommand(packageManager) {
