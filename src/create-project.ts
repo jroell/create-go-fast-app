@@ -1,6 +1,5 @@
 import { join } from 'path';
 import { mkdirSync, writeFileSync, existsSync } from 'fs';
-import { execSync } from 'child_process';
 import { ProjectConfig, PackageJson } from './types';
 import { getNextPackageJson } from './templates/package-json';
 import { getNextConfig } from './templates/next-config';
@@ -468,30 +467,20 @@ drizzle/
   
   // Install dependencies if not skipped
   if (!config.skipInstall) {
-    try {
-      const installCommand = getInstallCommand(config.packageManager);
-      execSync(installCommand, { cwd: projectPath, stdio: 'inherit' });
-    } catch (error) {
-      // Try with legacy peer deps for npm if there are dependency conflicts
-      if (config.packageManager === 'npm') {
-        console.log('\nRetrying with --legacy-peer-deps due to dependency conflicts...');
-        execSync('npm install --legacy-peer-deps', { cwd: projectPath, stdio: 'inherit' });
-      } else {
-        throw error;
+    const { installDependencies } = await import('./install-strategies');
+    const installResult = await installDependencies(projectPath, config.packageManager, config);
+    
+    if (!installResult.success) {
+      const error = new Error(`Failed to install dependencies: ${installResult.error}`);
+      if (installResult.fixInstructions) {
+        console.log('\n💡 Troubleshooting steps:');
+        console.log(installResult.fixInstructions);
       }
+      throw error;
     }
-  }
-}
-
-function getInstallCommand(packageManager: string): string {
-  switch (packageManager) {
-    case 'yarn':
-      return 'yarn install';
-    case 'pnpm':
-      return 'pnpm install';
-    case 'bun':
-      return 'bun install';
-    default:
-      return 'npm install';
+    
+    if (installResult.command !== `${config.packageManager} install`) {
+      console.log(`\n✅ Dependencies installed using fallback strategy: ${installResult.command}`);
+    }
   }
 }

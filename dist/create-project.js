@@ -1,9 +1,41 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || (function () {
+    var ownKeys = function(o) {
+        ownKeys = Object.getOwnPropertyNames || function (o) {
+            var ar = [];
+            for (var k in o) if (Object.prototype.hasOwnProperty.call(o, k)) ar[ar.length] = k;
+            return ar;
+        };
+        return ownKeys(o);
+    };
+    return function (mod) {
+        if (mod && mod.__esModule) return mod;
+        var result = {};
+        if (mod != null) for (var k = ownKeys(mod), i = 0; i < k.length; i++) if (k[i] !== "default") __createBinding(result, mod, k[i]);
+        __setModuleDefault(result, mod);
+        return result;
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createProject = createProject;
 const path_1 = require("path");
 const fs_1 = require("fs");
-const child_process_1 = require("child_process");
 const package_json_1 = require("./templates/package-json");
 const next_config_1 = require("./templates/next-config");
 const tailwind_config_1 = require("./templates/tailwind-config");
@@ -332,32 +364,19 @@ drizzle/
 `);
     // Install dependencies if not skipped
     if (!config.skipInstall) {
-        try {
-            const installCommand = getInstallCommand(config.packageManager);
-            (0, child_process_1.execSync)(installCommand, { cwd: projectPath, stdio: 'inherit' });
-        }
-        catch (error) {
-            // Try with legacy peer deps for npm if there are dependency conflicts
-            if (config.packageManager === 'npm') {
-                console.log('\nRetrying with --legacy-peer-deps due to dependency conflicts...');
-                (0, child_process_1.execSync)('npm install --legacy-peer-deps', { cwd: projectPath, stdio: 'inherit' });
+        const { installDependencies } = await Promise.resolve().then(() => __importStar(require('./install-strategies')));
+        const installResult = await installDependencies(projectPath, config.packageManager, config);
+        if (!installResult.success) {
+            const error = new Error(`Failed to install dependencies: ${installResult.error}`);
+            if (installResult.fixInstructions) {
+                console.log('\n💡 Troubleshooting steps:');
+                console.log(installResult.fixInstructions);
             }
-            else {
-                throw error;
-            }
+            throw error;
         }
-    }
-}
-function getInstallCommand(packageManager) {
-    switch (packageManager) {
-        case 'yarn':
-            return 'yarn install';
-        case 'pnpm':
-            return 'pnpm install';
-        case 'bun':
-            return 'bun install';
-        default:
-            return 'npm install';
+        if (installResult.command !== `${config.packageManager} install`) {
+            console.log(`\n✅ Dependencies installed using fallback strategy: ${installResult.command}`);
+        }
     }
 }
 //# sourceMappingURL=create-project.js.map
