@@ -87,17 +87,17 @@ function getNextPackageJson(config) {
     if (config.includeAI) {
         basePackageJson.dependencies = {
             ...basePackageJson.dependencies,
-            "ai": "^3.0.0",
-            "@ai-sdk/openai": "^0.0.20",
-            "@ai-sdk/anthropic": "^0.0.20",
-            "@ai-sdk/google": "^0.0.20",
+            "ai": "^4.0.0",
+            "@ai-sdk/openai": "^1.0.0",
+            "@ai-sdk/anthropic": "^1.0.0",
+            "@ai-sdk/google": "^1.0.0",
             "langchain": "^0.2.0",
-            "langgraph": "^0.0.20",
+            "@langchain/langgraph": "^0.3.0",
             "@langchain/openai": "^0.2.0",
             "@langchain/anthropic": "^0.2.0",
             "@langchain/community": "^0.2.0",
             "@langchain/core": "^0.2.0",
-            "vectordb": "^0.4.0",
+            "@lancedb/lancedb": "^0.21.0",
         };
     }
     // Add authentication dependencies
