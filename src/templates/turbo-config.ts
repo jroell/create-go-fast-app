@@ -3,7 +3,6 @@ import { ProjectConfig } from '../types';
 export function getTurboConfig(config: ProjectConfig) {
   return {
     "$schema": "https://turbo.build/schema.json",
-    "ui": "tui",
     "tasks": {
       "build": {
         "dependsOn": ["^build"],

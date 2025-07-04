@@ -4,7 +4,6 @@ exports.getTurboConfig = getTurboConfig;
 function getTurboConfig(config) {
     return {
         "$schema": "https://turbo.build/schema.json",
-        "ui": "tui",
         "tasks": {
             "build": {
                 "dependsOn": ["^build"],

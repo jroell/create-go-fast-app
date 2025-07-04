@@ -5,6 +5,7 @@ export function getNextPackageJson(config: ProjectConfig): PackageJson {
     name: config.projectName,
     version: "0.1.0",
     private: true,
+    packageManager: "npm@11.4.1",
     scripts: {
       build: "next build",
       dev: "next dev",
@@ -92,12 +93,12 @@ export function getNextPackageJson(config: ProjectConfig): PackageJson {
       "@ai-sdk/openai": "^1.0.0",
       "@ai-sdk/anthropic": "^1.0.0",
       "@ai-sdk/google": "^1.0.0",
-      "langchain": "^0.2.0",
+      "langchain": "^0.3.29",
       "@langchain/langgraph": "^0.3.0",
-      "@langchain/openai": "^0.2.0",
-      "@langchain/anthropic": "^0.2.0",
-      "@langchain/community": "^0.2.0",
-      "@langchain/core": "^0.2.0",
+      "@langchain/openai": "^0.5.0",
+      "@langchain/anthropic": "^0.3.24",
+      "@langchain/community": "^0.3.48",
+      "@langchain/core": "^0.3.58",
       "@lancedb/lancedb": "^0.21.0",
     };
   }
@@ -191,7 +192,7 @@ export function getNextPackageJson(config: ProjectConfig): PackageJson {
   if (config.template === 'full') {
     basePackageJson.devDependencies = {
       ...basePackageJson.devDependencies,
-      "turbo": "^1.11.0",
+      "turbo": "^2.5.0",
     };
     
     basePackageJson.scripts = {

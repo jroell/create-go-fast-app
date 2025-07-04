@@ -1,7 +1,6 @@
 import { ProjectConfig } from '../types';
 export declare function getTurboConfig(config: ProjectConfig): {
     $schema: string;
-    ui: string;
     tasks: {
         "db:generate"?: {
             cache: boolean;
