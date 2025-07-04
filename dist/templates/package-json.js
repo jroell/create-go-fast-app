@@ -177,17 +177,15 @@ function getNextPackageJson(config) {
             "langsmith": "^0.1.0",
         };
     }
-    // Add Turborepo dependencies
+    // Add Turborepo dependencies (but keep original scripts to avoid recursion)
     if (config.template === 'full') {
         basePackageJson.devDependencies = {
             ...basePackageJson.devDependencies,
             "turbo": "^2.5.0",
         };
+        // Add turbo clean script only, keep other scripts as Next.js direct commands
         basePackageJson.scripts = {
             ...basePackageJson.scripts,
-            "build": "turbo build",
-            "dev": "turbo dev",
-            "lint": "turbo lint",
             "clean": "turbo clean",
         };
     }

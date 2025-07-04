@@ -6,31 +6,39 @@ export function getTurboConfig(config: ProjectConfig) {
     "tasks": {
       "build": {
         "dependsOn": ["^build"],
-        "outputs": [".next/**", "!.next/cache/**", "dist/**"]
+        "outputs": [".next/**", "!.next/cache/**", "dist/**"],
+        "command": "next build"
       },
       "lint": {
-        "dependsOn": ["^lint"]
+        "dependsOn": ["^lint"],
+        "command": "next lint"
       },
       "dev": {
         "cache": false,
-        "persistent": true
+        "persistent": true,
+        "command": "next dev"
       },
       "clean": {
-        "cache": false
+        "cache": false,
+        "command": "rm -rf .next .turbo dist node_modules/.cache"
       },
       "type-check": {
-        "dependsOn": ["^type-check"]
+        "dependsOn": ["^type-check"],
+        "command": "tsc --noEmit"
       },
       ...(config.includeDatabase && {
         "db:generate": {
-          "cache": false
+          "cache": false,
+          "command": "drizzle-kit generate"
         },
         "db:migrate": {
-          "cache": false
+          "cache": false,
+          "command": "drizzle-kit migrate"
         },
         "db:studio": {
           "cache": false,
-          "persistent": true
+          "persistent": true,
+          "command": "drizzle-kit studio"
         }
       })
     }
