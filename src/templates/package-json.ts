@@ -179,6 +179,7 @@ export function getNextPackageJson(config: ProjectConfig): PackageJson {
     basePackageJson.dependencies = {
       ...basePackageJson.dependencies,
       "@sentry/nextjs": "^8.0.0",
+      "@vercel/analytics": "^1.0.0",
       "@opentelemetry/api": "^1.7.0",
       "@opentelemetry/sdk-node": "^0.48.0",
       "@opentelemetry/auto-instrumentations-node": "^0.41.0",

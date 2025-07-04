@@ -31,7 +31,7 @@ console.log(chalk.cyan.bold(`\n${subtitle}\n`));
 program
   .name('create-go-fast-app')
   .description('Create a new project with the GO FAST 🔥 STACK')
-  .version('1.0.5')
+  .version('1.0.6')
   .argument('[project-name]', 'name of the project to create')
   .option('-t, --template <template>', 'template to use', 'full')
   .option('-y, --yes', 'use default configuration')
@@ -355,7 +355,7 @@ program
       console.error(chalk.white('\nInclude the following information:'));
       console.error(chalk.white(`   • OS: ${platform()}`));
       console.error(chalk.white(`   • Node.js: ${process.version}`));
-      console.error(chalk.white(`   • CLI version: 1.0.5`));
+      console.error(chalk.white(`   • CLI version: 1.0.6`));
       console.error(chalk.white(`   • Error: ${error instanceof Error ? error.message : 'Unknown error'}`));
       
       process.exit(1);

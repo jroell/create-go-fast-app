@@ -15,10 +15,10 @@ function getInstallStrategy(packageManager, config) {
     switch (packageManager) {
         case 'npm':
             return {
-                command: 'npm install',
+                command: 'npm install --force',
                 fallbackCommands: [
                     'npm install --legacy-peer-deps',
-                    'npm install --force',
+                    'npm install',
                     'npm install --no-optional --legacy-peer-deps'
                 ],
                 timeout: 300000, // 5 minutes
