@@ -21,6 +21,14 @@ import { getApiRoute } from './templates/api-routes';
 import { getChatComponent } from './templates/chat-component';
 import { getElectronConfig } from './templates/electron-config';
 import { getSentryConfig } from './templates/sentry-config';
+import { 
+  getButtonComponent, 
+  getCardComponent, 
+  getInputComponent, 
+  getScrollAreaComponent,
+  getAvatarComponent,
+  getSeparatorComponent 
+} from './templates/ui-components';
 
 export async function createProject(config: ProjectConfig): Promise<void> {
   const projectPath = join(process.cwd(), config.projectName);
@@ -208,6 +216,39 @@ export function cn(...inputs: ClassValue[]) {
 }
 `
   );
+  
+  // Create shadcn/ui components for non-minimal templates
+  if (config.template !== 'minimal') {
+    writeFileSync(
+      join(projectPath, 'src/components/ui/button.tsx'),
+      getButtonComponent()
+    );
+    
+    writeFileSync(
+      join(projectPath, 'src/components/ui/card.tsx'),
+      getCardComponent()
+    );
+    
+    writeFileSync(
+      join(projectPath, 'src/components/ui/input.tsx'),
+      getInputComponent()
+    );
+    
+    writeFileSync(
+      join(projectPath, 'src/components/ui/scroll-area.tsx'),
+      getScrollAreaComponent()
+    );
+    
+    writeFileSync(
+      join(projectPath, 'src/components/ui/avatar.tsx'),
+      getAvatarComponent()
+    );
+    
+    writeFileSync(
+      join(projectPath, 'src/components/ui/separator.tsx'),
+      getSeparatorComponent()
+    );
+  }
   
   // Create auth configuration if needed
   if (config.includeAuth) {

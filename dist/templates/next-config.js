@@ -3,9 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.getNextConfig = getNextConfig;
 function getNextConfig(config) {
     const baseConfig = {
-        experimental: {
-            serverComponentsExternalPackages: ['@node-rs/argon2'],
-        },
+        experimental: {},
         images: {
             remotePatterns: [
                 {

@@ -2,9 +2,7 @@ import { ProjectConfig } from '../types';
 
 export function getNextConfig(config: ProjectConfig): string {
   const baseConfig = {
-    experimental: {
-      serverComponentsExternalPackages: ['@node-rs/argon2'],
-    },
+    experimental: {},
     images: {
       remotePatterns: [
         {

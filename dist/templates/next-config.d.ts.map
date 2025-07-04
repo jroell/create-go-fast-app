@@ -1,1 +1,1 @@
-{"version":3,"file":"next-config.d.ts","sourceRoot":"","sources":["../../src/templates/next-config.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,UAAU,CAAC;AAEzC,wBAAgB,aAAa,CAAC,MAAM,EAAE,aAAa,GAAG,MAAM,CAqD3D"}
+{"version":3,"file":"next-config.d.ts","sourceRoot":"","sources":["../../src/templates/next-config.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,aAAa,EAAE,MAAM,UAAU,CAAC;AAEzC,wBAAgB,aAAa,CAAC,MAAM,EAAE,aAAa,GAAG,MAAM,CAmD3D"}

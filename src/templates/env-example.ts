@@ -70,9 +70,9 @@ OTEL_RESOURCE_ATTRIBUTES=service.name=${config.projectName}
   }
 
   // Add Vercel environment variables
-  envContent += `# Vercel
-VERCEL_URL=\${VERCEL_URL}
-VERCEL_ENV=\${VERCEL_ENV}
+  envContent += `# Vercel (automatically set by Vercel)
+# VERCEL_URL will be set automatically in production
+# VERCEL_ENV will be set automatically in production
 
 # Analytics
 NEXT_PUBLIC_VERCEL_ANALYTICS_ID=your-analytics-id

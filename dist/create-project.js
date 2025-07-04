@@ -56,6 +56,7 @@ const api_routes_1 = require("./templates/api-routes");
 const chat_component_1 = require("./templates/chat-component");
 const electron_config_1 = require("./templates/electron-config");
 const sentry_config_1 = require("./templates/sentry-config");
+const ui_components_1 = require("./templates/ui-components");
 async function createProject(config) {
     const projectPath = (0, path_1.join)(process.cwd(), config.projectName);
     // Create project directory
@@ -182,6 +183,15 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
 }
 `);
+    // Create shadcn/ui components for non-minimal templates
+    if (config.template !== 'minimal') {
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/components/ui/button.tsx'), (0, ui_components_1.getButtonComponent)());
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/components/ui/card.tsx'), (0, ui_components_1.getCardComponent)());
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/components/ui/input.tsx'), (0, ui_components_1.getInputComponent)());
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/components/ui/scroll-area.tsx'), (0, ui_components_1.getScrollAreaComponent)());
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/components/ui/avatar.tsx'), (0, ui_components_1.getAvatarComponent)());
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/components/ui/separator.tsx'), (0, ui_components_1.getSeparatorComponent)());
+    }
     // Create auth configuration if needed
     if (config.includeAuth) {
         (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/lib/auth/config.ts'), (0, auth_config_1.getAuthConfig)(config));
