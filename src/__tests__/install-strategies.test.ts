@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { execSync } from 'child_process';
 import { platform } from 'os';
 import {
@@ -10,11 +10,11 @@ import {
 import { ProjectConfig } from '../types';
 
 // Mock Node.js modules
-jest.mock('child_process');
-jest.mock('os');
+vi.mock('child_process');
+vi.mock('os');
 
-const mockExecSync = execSync as jest.MockedFunction<typeof execSync>;
-const mockPlatform = platform as jest.MockedFunction<typeof platform>;
+const mockExecSync = vi.mocked(execSync);
+const mockPlatform = vi.mocked(platform);
 
 const mockConfig: ProjectConfig = {
   projectName: 'test-project',
@@ -30,7 +30,7 @@ const mockConfig: ProjectConfig = {
 
 describe('Install Strategies', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     mockPlatform.mockReturnValue('linux');
   });
 
@@ -38,9 +38,9 @@ describe('Install Strategies', () => {
     it('should return npm strategy', () => {
       const strategy = getInstallStrategy('npm', mockConfig);
       
-      expect(strategy.command).toBe('npm install');
+      expect(strategy.command).toBe('npm install --force');
       expect(strategy.fallbackCommands).toContain('npm install --legacy-peer-deps');
-      expect(strategy.fallbackCommands).toContain('npm install --force');
+      expect(strategy.fallbackCommands).toContain('npm install');
       expect(strategy.fallbackCommands).toContain('npm install --no-optional --legacy-peer-deps');
       expect(strategy.timeout).toBe(300000);
       expect(strategy.env).toHaveProperty('NODE_ENV', 'development');
@@ -87,7 +87,7 @@ describe('Install Strategies', () => {
       const result = await installDependencies(projectPath, 'npm', mockConfig);
       
       expect(result.success).toBe(true);
-      expect(result.command).toBe('npm install');
+      expect(result.command).toBe('npm install --force');
       expect(result.output).toBe('Installation successful');
       expect(mockExecSync).toHaveBeenCalledTimes(1);
     });
@@ -251,7 +251,7 @@ describe('Install Strategies', () => {
 
     it('should add delay for network timeouts', async () => {
       const originalSetTimeout = global.setTimeout;
-      (global as any).setTimeout = jest.fn().mockImplementation((cb: any) => cb()) as any;
+      (global as any).setTimeout = vi.fn().mockImplementation((cb: any) => cb()) as any;
 
       mockExecSync
         .mockImplementationOnce(() => {

@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeEach, afterEach, jest } from '@jest/globals';
+import { describe, it, expect, beforeEach, afterEach, vi } from 'vitest';
 import { execSync } from 'child_process';
 import { existsSync, accessSync, constants, statSync } from 'fs';
 import { platform, arch, totalmem, freemem } from 'os';
@@ -6,17 +6,17 @@ import { performSystemChecks, displaySystemChecks, SystemCheck } from '../system
 import { ProjectConfig } from '../types';
 
 // Mock Node.js modules
-jest.mock('child_process');
-jest.mock('fs');
-jest.mock('os');
+vi.mock('child_process');
+vi.mock('fs');
+vi.mock('os');
 
-const mockExecSync = execSync as jest.MockedFunction<typeof execSync>;
-const mockExistsSync = existsSync as jest.MockedFunction<typeof existsSync>;
-const mockAccessSync = accessSync as jest.MockedFunction<typeof accessSync>;
-const mockStatSync = statSync as jest.MockedFunction<typeof statSync>;
-const mockPlatform = platform as jest.MockedFunction<typeof platform>;
-const mockTotalmem = totalmem as jest.MockedFunction<typeof totalmem>;
-const mockFreemem = freemem as jest.MockedFunction<typeof freemem>;
+const mockExecSync = vi.mocked(execSync);
+const mockExistsSync = vi.mocked(existsSync);
+const mockAccessSync = vi.mocked(accessSync);
+const mockStatSync = vi.mocked(statSync);
+const mockPlatform = vi.mocked(platform);
+const mockTotalmem = vi.mocked(totalmem);
+const mockFreemem = vi.mocked(freemem);
 
 const mockConfig: ProjectConfig = {
   projectName: 'test-project',
@@ -32,7 +32,7 @@ const mockConfig: ProjectConfig = {
 
 describe('System Checks', () => {
   beforeEach(() => {
-    jest.resetAllMocks();
+    vi.resetAllMocks();
     
     // Default successful mocks
     mockPlatform.mockReturnValue('linux');
@@ -249,7 +249,7 @@ describe('System Checks', () => {
       
       // Mock short current directory
       const originalCwd = process.cwd;
-      (process as any).cwd = jest.fn().mockReturnValue('C:\\short');
+      (process as any).cwd = vi.fn().mockReturnValue('C:\\short');
 
       const result = await performSystemChecks(mockConfig);
       const pathCheck = result.checks.find(c => c.name === 'Windows Path Length');
@@ -266,7 +266,7 @@ describe('System Checks', () => {
       // Mock very long current directory
       const longPath = 'C:\\' + 'very-long-directory-name\\'.repeat(20);
       const originalCwd = process.cwd;
-      (process as any).cwd = jest.fn().mockReturnValue(longPath);
+      (process as any).cwd = vi.fn().mockReturnValue(longPath);
 
       const result = await performSystemChecks(mockConfig);
       const pathCheck = result.checks.find(c => c.name === 'Windows Path Length');
@@ -409,7 +409,7 @@ describe('System Checks', () => {
 
   describe('Display Function', () => {
     it('should display system check results', () => {
-      const consoleSpy = jest.spyOn(console, 'log').mockImplementation((() => {}) as any);
+      const consoleSpy = vi.spyOn(console, 'log').mockImplementation((() => {}) as any);
       
       const mockResult = {
         allPassed: false,
