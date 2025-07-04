@@ -1,6 +1,6 @@
 {
   "name": "create-go-fast-app",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "A CLI tool to create a new project with the GO FAST 🔥 STACK - the best AI-first tech stack in 2025",
   "main": "dist/index.js",
   "bin": {

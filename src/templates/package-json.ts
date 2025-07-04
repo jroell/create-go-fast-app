@@ -12,6 +12,8 @@ export function getNextPackageJson(config: ProjectConfig): PackageJson {
       lint: "next lint",
       start: "next start",
       "type-check": "tsc --noEmit",
+      "deploy": "vercel --prod",
+      "deploy-preview": "vercel",
     },
     dependencies: {
       next: "^15.0.0",
@@ -188,6 +190,12 @@ export function getNextPackageJson(config: ProjectConfig): PackageJson {
       "langsmith": "^0.1.0",
     };
   }
+
+  // Add Vercel CLI for all templates
+  basePackageJson.devDependencies = {
+    ...basePackageJson.devDependencies,
+    "vercel": "^37.0.0",
+  };
 
   // Add Turborepo dependencies (but keep original scripts to avoid recursion)
   if (config.template === 'full') {

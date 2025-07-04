@@ -29,7 +29,7 @@ console.log(chalk_1.default.cyan.bold(`\n${subtitle}\n`));
 program
     .name('create-go-fast-app')
     .description('Create a new project with the GO FAST 🔥 STACK')
-    .version('1.0.6')
+    .version('1.0.7')
     .argument('[project-name]', 'name of the project to create')
     .option('-t, --template <template>', 'template to use', 'full')
     .option('-y, --yes', 'use default configuration')
@@ -257,6 +257,9 @@ program
                 console.log(chalk_1.default.white(`  ${config.packageManager} install`));
             }
             console.log(chalk_1.default.white(`  ${config.packageManager} run dev`));
+            console.log(chalk_1.default.blue(`\nDeployment:`));
+            console.log(chalk_1.default.white(`  ${config.packageManager} run deploy         # Deploy to production`));
+            console.log(chalk_1.default.white(`  ${config.packageManager} run deploy-preview  # Deploy preview`));
             // Show additional setup information
             if (config.includeDatabase) {
                 console.log(chalk_1.default.blue(`\nDatabase setup:`));
@@ -283,6 +286,8 @@ program
                 console.log(chalk_1.default.white(`  • Enable Developer Mode for symlink support`));
                 console.log(chalk_1.default.white(`  • Consider using WSL2 for better compatibility`));
             }
+            // Exit cleanly
+            process.exit(0);
         }
         catch (error) {
             spinner.fail(chalk_1.default.red('Failed to create project'));
@@ -319,7 +324,7 @@ program
         console.error(chalk_1.default.white('\nInclude the following information:'));
         console.error(chalk_1.default.white(`   • OS: ${(0, os_1.platform)()}`));
         console.error(chalk_1.default.white(`   • Node.js: ${process.version}`));
-        console.error(chalk_1.default.white(`   • CLI version: 1.0.6`));
+        console.error(chalk_1.default.white(`   • CLI version: 1.0.7`));
         console.error(chalk_1.default.white(`   • Error: ${error instanceof Error ? error.message : 'Unknown error'}`));
         process.exit(1);
     }
