@@ -57,7 +57,7 @@ afterAll(() => {
 
 // Global test utilities
 declare global {
-  var mockExit: typeof mockExit;
+  var mockExit: ReturnType<typeof vi.fn>;
 }
 
 globalThis.mockExit = mockExit;
