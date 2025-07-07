@@ -859,15 +859,4 @@ If this project helped you, please give it a ⭐ on [GitHub](https://github.com/
 
 MIT License - see [LICENSE](LICENSE) for details.
 
-## 🆘 Support
-
-- 📖 [Documentation](https://github.com/jroell/create-go-fast-app/wiki)
-- 🐛 [Issue Tracker](https://github.com/jroell/create-go-fast-app/issues)
-- 💬 [Discord Community](https://discord.gg/go-fast-stack)
-- 🐦 [Twitter Updates](https://twitter.com/GoFastStack)
-
----
-
-**Built with ❤️ by developers, for developers.**
-
 *Start building the future of AI applications today with the GO FAST 🔥 STACK.*
