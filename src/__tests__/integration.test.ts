@@ -180,7 +180,7 @@ describe('Integration Tests - End-to-End Project Creation', () => {
         'src/lib/auth/config.ts',
         'src/lib/db/index.ts',
         'src/lib/ai/config.ts',
-        'src/lib/trpc/client.ts'
+        'src/lib/trpc/client.tsx'
       ];
 
       featureFiles.forEach(file => {

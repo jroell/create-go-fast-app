@@ -308,7 +308,7 @@ export const posts = pgTable("posts", {
   // Create tRPC configuration if needed
   if (config.template === 'full') {
     writeFileSync(
-      join(projectPath, 'src/lib/trpc/client.ts'),
+      join(projectPath, 'src/lib/trpc/client.tsx'),
       getTrpcConfig(config)
     );
     

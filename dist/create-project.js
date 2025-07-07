@@ -229,7 +229,7 @@ export const posts = pgTable("posts", {
     }
     // Create tRPC configuration if needed
     if (config.template === 'full') {
-        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/lib/trpc/client.ts'), (0, trpc_config_1.getTrpcConfig)(config));
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/lib/trpc/client.tsx'), (0, trpc_config_1.getTrpcConfig)(config));
         (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/server/api/root.ts'), `import { createTRPCRouter } from "~/server/api/trpc";
 import { postRouter } from "~/server/api/routers/post";
 
