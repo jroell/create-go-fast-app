@@ -196,7 +196,7 @@ export function cn(...inputs: ClassValue[]) {
     if (config.includeAuth) {
         (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/lib/auth/config.ts'), (0, auth_config_1.getAuthConfig)(config));
         (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/app/api/auth/[...nextauth]/route.ts'), `import NextAuth from "next-auth"
-import { authConfig } from "~/lib/auth/config"
+import { authConfig } from "@/lib/auth/config"
 
 const handler = NextAuth(authConfig)
 
@@ -307,6 +307,30 @@ export async function POST(req: Request) {
     // Create observability configuration if needed
     if (config.includeObservability) {
         (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'sentry.config.js'), (0, sentry_config_1.getSentryConfig)(config));
+        // Create global error handler for Sentry
+        (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'src/app/global-error.tsx'), `"use client";
+
+import * as Sentry from "@sentry/nextjs";
+import Error from "next/error";
+import { useEffect } from "react";
+
+export default function GlobalError({
+  error,
+}: {
+  error: Error & { digest?: string };
+}) {
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
+
+  return (
+    <html>
+      <body>
+        <Error statusCode={undefined as any} />
+      </body>
+    </html>
+  );
+}`);
     }
     // Create README
     (0, fs_1.writeFileSync)((0, path_1.join)(projectPath, 'README.md'), (0, readme_1.getReadme)(config));

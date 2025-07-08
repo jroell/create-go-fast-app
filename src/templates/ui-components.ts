@@ -5,7 +5,7 @@ export function getButtonComponent(): string {
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 
-import { cn } from "~/lib/utils"
+import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
   "inline-flex items-center justify-center whitespace-nowrap rounded-md text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
@@ -63,7 +63,7 @@ export { Button, buttonVariants }
 export function getCardComponent(): string {
   return `import * as React from "react"
 
-import { cn } from "~/lib/utils"
+import { cn } from "@/lib/utils"
 
 const Card = React.forwardRef<
   HTMLDivElement,
@@ -146,7 +146,7 @@ export { Card, CardHeader, CardFooter, CardTitle, CardDescription, CardContent }
 export function getInputComponent(): string {
   return `import * as React from "react"
 
-import { cn } from "~/lib/utils"
+import { cn } from "@/lib/utils"
 
 export interface InputProps
   extends React.InputHTMLAttributes<HTMLInputElement> {}
@@ -176,7 +176,7 @@ export function getScrollAreaComponent(): string {
   return `import * as React from "react"
 import * as ScrollAreaPrimitive from "@radix-ui/react-scroll-area"
 
-import { cn } from "~/lib/utils"
+import { cn } from "@/lib/utils"
 
 const ScrollArea = React.forwardRef<
   React.ElementRef<typeof ScrollAreaPrimitive.Root>,
@@ -226,7 +226,7 @@ export function getAvatarComponent(): string {
   return `import * as React from "react"
 import * as AvatarPrimitive from "@radix-ui/react-avatar"
 
-import { cn } from "~/lib/utils"
+import { cn } from "@/lib/utils"
 
 const Avatar = React.forwardRef<
   React.ElementRef<typeof AvatarPrimitive.Root>,
@@ -278,7 +278,7 @@ export function getSeparatorComponent(): string {
   return `import * as React from "react"
 import * as SeparatorPrimitive from "@radix-ui/react-separator"
 
-import { cn } from "~/lib/utils"
+import { cn } from "@/lib/utils"
 
 const Separator = React.forwardRef<
   React.ElementRef<typeof SeparatorPrimitive.Root>,

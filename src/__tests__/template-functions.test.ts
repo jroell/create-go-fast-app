@@ -517,7 +517,7 @@ describe('UI Components Generation', () => {
 
       components.forEach(component => {
         expect(component).toContain('import * as React from "react"');
-        expect(component).toContain('import { cn } from "~/lib/utils"');
+        expect(component).toContain('import { cn } from "@/lib/utils"');
       });
     });
 

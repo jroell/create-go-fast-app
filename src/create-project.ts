@@ -260,7 +260,7 @@ export function cn(...inputs: ClassValue[]) {
     writeFileSync(
       join(projectPath, 'src/app/api/auth/[...nextauth]/route.ts'),
       `import NextAuth from "next-auth"
-import { authConfig } from "~/lib/auth/config"
+import { authConfig } from "@/lib/auth/config"
 
 const handler = NextAuth(authConfig)
 
@@ -431,6 +431,34 @@ export async function POST(req: Request) {
     writeFileSync(
       join(projectPath, 'sentry.config.js'),
       getSentryConfig(config)
+    );
+    
+    // Create global error handler for Sentry
+    writeFileSync(
+      join(projectPath, 'src/app/global-error.tsx'),
+      `"use client";
+
+import * as Sentry from "@sentry/nextjs";
+import Error from "next/error";
+import { useEffect } from "react";
+
+export default function GlobalError({
+  error,
+}: {
+  error: Error & { digest?: string };
+}) {
+  useEffect(() => {
+    Sentry.captureException(error);
+  }, [error]);
+
+  return (
+    <html>
+      <body>
+        <Error statusCode={undefined as any} />
+      </body>
+    </html>
+  );
+}`
     );
   }
   
